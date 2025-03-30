@@ -4,14 +4,13 @@
 # 2. Numbers from the first set that are not present in the second, and vice versa.
 # 3. Numbers from both sets, except for the numbers found in step 1.
 
-user_numbers_list_1 = [float(number) for number in input("Enter the first list of numbers: ").split()]
-user_numbers_list_2 = [float(number) for number in input("EEnter the second list of numbers: ").split()]
+user_numbers_set_1 = {float(number) for number in input("Enter the first list of numbers: ").split()}
+user_numbers_set_2 = {float(number) for number in input("Enter the second list of numbers: ").split()}
 
-numbers_on_both_lists = {number for number in user_numbers_list_1 if number in user_numbers_list_2}
-numbers_on_only_first_list = {number for number in user_numbers_list_1 if not number in user_numbers_list_2}
-numbers_on_only_second_list = {number for number in user_numbers_list_2 if not number in user_numbers_list_1}
-numbers_on_only_first_and_second_list = numbers_on_only_first_list | numbers_on_only_second_list
-
+numbers_on_both_lists = user_numbers_set_1 & user_numbers_set_2
+numbers_on_only_first_list = user_numbers_set_1 - user_numbers_set_2
+numbers_on_only_second_list = user_numbers_set_2 - user_numbers_set_1
+numbers_on_only_first_and_second_list = user_numbers_set_1 ^ user_numbers_set_2
 
 def custom_data_output(msg_1, msg_2, list_number):
     if len(list_number):

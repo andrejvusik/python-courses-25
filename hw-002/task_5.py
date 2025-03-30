@@ -11,8 +11,8 @@ print("This is an anagram check.")
 first_word = input("Enter a first word: ").lower()
 second_word = input("Enter a first word: ").lower()
 
-first_word_list = [i for i in first_word]
-second_word_list = [i for i in second_word]
+first_word_list = list(first_word)
+second_word_list = list(second_word)
 
 first_word_list.sort()
 second_word_list.sort()

@@ -14,7 +14,7 @@ def cashes_dec(func):
             func_result = func_cashes_dict[(func.__name__, args, kwargs_tuple)]
         else:
             func_result = func(*args, **kwargs)
-            func_cashes_dict.update({(func.__name__, args, kwargs_tuple): func_result})
+            func_cashes_dict[(func.__name__, args, kwargs_tuple)] = func_result
         return func_result
     return wrapper
 
@@ -22,27 +22,27 @@ def cashes_dec(func):
 # Checking the functionality of the function
 
 @cashes_dec
-def a_fanc(x):
+def a_func(x):
     a = x
-    print("The a_fanc function was launched")
+    print("The a_func function was launched")
     return a
 
 @cashes_dec
-def b_fanc(x, y):
+def b_func(x, y):
     b = x + y
-    print("The b_fanc function was launched")
+    print("The b_func function was launched")
     return b
 
 @cashes_dec
-def c_fanc(x=1, y=7):
+def c_func(x=1, y=7):
     c = x + y
-    print("The c_fanc function was launched")
+    print("The c_func function was launched")
     return c
 
-a_fanc(1)
-b_fanc(1, 2)
-a_fanc(5)
-a_fanc(1)
-b_fanc(7, 9)
-c_fanc(x=2, y=4)
-c_fanc(x=2, y=4)
+a_func(1)
+b_func(1, 2)
+a_func(5)
+a_func(1)
+b_func(7, 9)
+c_func(x=2, y=4)
+c_func(x=2, y=4)

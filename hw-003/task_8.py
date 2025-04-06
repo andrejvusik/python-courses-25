@@ -13,7 +13,7 @@ def merge_sort(unsorted_list):
     result_list = []
     first_list_count = second_list_count = 0
 
-    for i in range(len(unsorted_list)):
+    for _ in range(len(unsorted_list)):
         if first_list_count < len(first_list) and second_list_count < len(second_list):
             if first_list[first_list_count] < second_list[second_list_count]:
                 result_list.append(first_list[first_list_count])

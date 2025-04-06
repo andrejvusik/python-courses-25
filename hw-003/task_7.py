@@ -5,8 +5,8 @@
 def merge_sorted_list(list_a, list_b):
     while len(list_b):
         x = list_b.pop(0)
-        for i in range(len(list_a)):
-            if x <= list_a[i]:
+        for i, item in enumerate(list_a):
+            if x <= item:
                 list_a.insert(i, x)
                 break
             elif x > list_a[-1]:

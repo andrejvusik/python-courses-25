@@ -15,9 +15,9 @@ def merge_dicts(dict_1, dict_2):
         el_dict_2 = dict([el_d_2])
         if el_d_2[0] in dict_1.keys() and (type(dict_1[el_d_2[0]]) == list):
             dict_1[el_d_2[0]].append(el_d_2[1])
-        elif (el_d_2[0] in dict_1.keys()
-              and (type(dict_1[el_d_2[0]]) == dict
-                   and type(el_d_2[1]) == dict)):
+        elif el_d_2[0] in dict_1.keys() and (
+            type(dict_1[el_d_2[0]]) == dict and type(el_d_2[1]) == dict
+        ):
             merge_dicts(dict_1[el_d_2[0]], el_d_2[1])
         else:
             dict_1.update(el_dict_2)

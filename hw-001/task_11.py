@@ -6,15 +6,15 @@ testing_ip = input("Please enter the IP address to check if it is correct: ")
 valid_ip = 1
 
 if testing_ip.count(".") != 3:
-    print(f"The entered IP address \"{testing_ip}\" is NOT correct.")
+    print(f'The entered IP address "{testing_ip}" is NOT correct.')
     valid_ip = 0
 else:
     testing_ip_parts = testing_ip.split(".")
     for part in testing_ip_parts:
         if not part.isdigit() or not 0 <= int(part) <= 255:
-            print(f"The entered IP address \"{testing_ip}\" is NOT correct.")
+            print(f'The entered IP address "{testing_ip}" is NOT correct.')
             valid_ip = 0
             break
 
 if valid_ip:
-    print(f"The entered IP address \"{testing_ip}\" is correct.")
+    print(f'The entered IP address "{testing_ip}" is correct.')

@@ -11,8 +11,13 @@ number_banknotes_5 = amount_of_money % 10 // 5
 number_banknotes_1 = amount_of_money % 5 // 1
 
 print(f"To exchange an amount equal to {amount_of_money} rub you will need: ")
-if number_banknotes_100: print(f"- banknotes of 100 rubles: {number_banknotes_100}")
-if number_banknotes_50: print(f"- banknotes of 50 rubles: {number_banknotes_50}")
-if number_banknotes_10: print(f"- banknotes of 10 rubles: {number_banknotes_10}")
-if number_banknotes_5: print(f"- banknotes of 5 rubles: {number_banknotes_5}")
-if number_banknotes_1: print(f"- banknotes of 1 ruble: {number_banknotes_1}")
+if number_banknotes_100:
+    print(f"- banknotes of 100 rubles: {number_banknotes_100}")
+if number_banknotes_50:
+    print(f"- banknotes of 50 rubles: {number_banknotes_50}")
+if number_banknotes_10:
+    print(f"- banknotes of 10 rubles: {number_banknotes_10}")
+if number_banknotes_5:
+    print(f"- banknotes of 5 rubles: {number_banknotes_5}")
+if number_banknotes_1:
+    print(f"- banknotes of 1 ruble: {number_banknotes_1}")

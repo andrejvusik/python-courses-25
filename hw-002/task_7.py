@@ -18,7 +18,7 @@ while len(users_string) > 0:
         compression_string.append(el)
         compression_string.append(el_count)
     else:
-        el_count = compression_string[-1] +1
+        el_count = compression_string[-1] + 1
         compression_string[-1] = el_count
 
 print("The compressed string looks like this:", end=" ")

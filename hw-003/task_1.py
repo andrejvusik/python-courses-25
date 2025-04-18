@@ -11,13 +11,12 @@ def flatten_list(user_list, result_list=None):
     if result_list is None:
         result_list = []
     for i in user_list:
-        if not isinstance(i,(list, tuple, set)):
+        if not isinstance(i, (list, tuple, set)):
             result_list.append(i)
         else:
             flatten_list(i, result_list)
     user_list.clear()
     user_list += result_list
-
 
 
 # Checking the functionality of the function

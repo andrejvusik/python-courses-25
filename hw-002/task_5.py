@@ -18,6 +18,10 @@ first_word_list.sort()
 second_word_list.sort()
 
 if first_word_list == second_word_list:
-    print(f"True! The words you entered \"{first_word}\" and \"{second_word}\" are anagrams!")
+    print(
+        f'True! The words you entered "{first_word}" and "{second_word}" are anagrams!'
+    )
 else:
-    print(f"False! The words you entered \"{first_word}\" and \"{second_word}\" are NOT anagrams!")
+    print(
+        f'False! The words you entered "{first_word}" and "{second_word}" are NOT anagrams!'
+    )

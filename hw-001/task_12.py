@@ -13,12 +13,14 @@ while entered_number > 0:
 
 str_number_bin = str_number_bin[::-1]
 
-print(f"The entered decimal number {user_entered_number} in binary notation: {str_number_bin}")
+print(
+    f"The entered decimal number {user_entered_number} in binary notation: {str_number_bin}"
+)
 
 number_dec = 0
 power_of_number = len(str_number_bin) - 1
 for i in str_number_bin:
-    number_dec += int(i) * 2 ** power_of_number
+    number_dec += int(i) * 2**power_of_number
     power_of_number -= 1
 
 print(f"The binary number {str_number_bin} in decimal notation: {number_dec}")

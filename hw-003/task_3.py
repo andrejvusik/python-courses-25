@@ -12,7 +12,9 @@ def log_calls(func, log_file="log_file.txt"):
         func_kwargs = kwargs
 
         fh = open(log_file, "a")
-        fh.write(f"{launch_time}. Launched function: {func_name}. Arguments: {func_args}, {func_kwargs}.\n")
+        fh.write(
+            f"{launch_time}. Launched function: {func_name}. Arguments: {func_args}, {func_kwargs}.\n"
+        )
         fh.close()
 
         result = func(*args, **kwargs)
@@ -24,13 +26,16 @@ def log_calls(func, log_file="log_file.txt"):
 
 # Checking the functionality of the function
 
+
 @log_calls
 def test_func_1(*args, **kwargs):
     print("Test 1 function.")
 
+
 @log_calls
 def test_func_2(*args):
     print("Test 2 function.")
+
 
 @log_calls
 def test_func_3(**kwargs):

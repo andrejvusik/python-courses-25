@@ -15,6 +15,7 @@
 step_cipher = int(input("Enter cipher step: "))
 entered_string = input("Enter a string of lowercase Latin letters (a–z): ").lower()
 
+
 def encrypted_character(character, step):
     if character == " ":
         return " "
@@ -22,9 +23,10 @@ def encrypted_character(character, step):
         encr_character = chr((ord(character) - 97 + step) % 26 + 97)
         return encr_character
 
-encrypted_string = [encrypted_character(character, step_cipher) for character in entered_string]
+
+encrypted_string = [
+    encrypted_character(character, step_cipher) for character in entered_string
+]
 
 print("Encrypted string: ", end="")
 print("".join(encrypted_string))
-
-

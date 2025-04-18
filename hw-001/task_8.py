@@ -7,7 +7,6 @@ test_string = input("Enter a string to check if it is a palindrome: ")
 reverse_test_string = test_string[::-1]
 
 if test_string == reverse_test_string:
-    print(f"The entered string \"{test_string}\" is a palindrome!")
+    print(f'The entered string "{test_string}" is a palindrome!')
 else:
-    print(f"The entered string \"{test_string}\" is NOT a palindrome!")
-
+    print(f'The entered string "{test_string}" is NOT a palindrome!')

@@ -4,8 +4,9 @@
 # arguments, the decorator should return the result from the cache, instead of
 # calling the decorated function.
 
-#Dictionary of function result hashes
+# Dictionary of function result hashes
 func_cashes_dict = {}
+
 
 def cashes_dec(func):
     def wrapper(*args, **kwargs):
@@ -16,10 +17,12 @@ def cashes_dec(func):
             func_result = func(*args, **kwargs)
             func_cashes_dict[(func.__name__, args, kwargs_tuple)] = func_result
         return func_result
+
     return wrapper
 
 
 # Checking the functionality of the function
+
 
 @cashes_dec
 def a_func(x):
@@ -27,17 +30,20 @@ def a_func(x):
     print("The a_func function was launched")
     return a
 
+
 @cashes_dec
 def b_func(x, y):
     b = x + y
     print("The b_func function was launched")
     return b
 
+
 @cashes_dec
 def c_func(x=1, y=7):
     c = x + y
     print("The c_func function was launched")
     return c
+
 
 a_func(1)
 b_func(1, 2)

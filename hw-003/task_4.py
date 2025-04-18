@@ -31,6 +31,7 @@ def input_matrix(matrix=None):
             count_cols = len(result_matrix[i])
     return result_matrix, count_rows, count_cols
 
+
 def transposes_matrix(matrix=None):
     matrix_after, cnt_rows, cnt_cols = input_matrix(matrix)
     matrix_before = [[0] * cnt_rows for _ in range(cnt_cols)]
@@ -39,7 +40,6 @@ def transposes_matrix(matrix=None):
             if i <= len(matrix_after[j]) - 1:
                 matrix_before[i][j] = matrix_after[j][i]
     return matrix_before
-
 
 
 # Checking the functionality of the function

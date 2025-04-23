@@ -28,14 +28,16 @@
 class StackIterator:
     def __init__(self, stack):
         self.stack = stack
+        self.index = 0
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        node = self.stack.pop()
-        if node is not None:
-            return node
+        if self.index + 1 <= self.stack.size():
+            data = self.stack.__getitem__(self.index)
+            self.index += 1
+            return data
         else:
             raise StopIteration
 
@@ -85,6 +87,18 @@ class Stack:
             while self._size:
                 print(self.pop())
 
+    def __getitem__(self, i):
+        if self._top_node is None:
+            return None
+        else:
+            pointer_node = self._top_node
+            for j in range(self._size):
+                if j == i:
+                    return pointer_node.data
+                else:
+                    pointer_node = pointer_node.next
+            return None
+
     def __iter__(self):
         return StackIterator(self)
 
@@ -93,6 +107,9 @@ class Stack:
 # n_stack.push(1)
 # n_stack.push(2)
 # n_stack.push(3)
+# n_stack.push(1)
+# n_stack.push(111)
+#
 #
 # for item in n_stack:
 #     print(item)

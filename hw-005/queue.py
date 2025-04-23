@@ -28,14 +28,16 @@
 class QueueIterator:
     def __init__(self, queue):
         self.queue = queue
+        self.index = 0
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        node = self.queue.dequeue()
-        if node is not None:
-            return node
+        if self.index + 1 <= self.queue.size():
+            data = self.queue.__getitem__(self.index)
+            self.index += 1
+            return data
         else:
             raise StopIteration
 
@@ -92,11 +94,23 @@ class Queue:
     def __iter__(self):
         return QueueIterator(self)
 
+    def __getitem__(self, i):
+        if self._first_node is None:
+            return None
+        else:
+            pointer_node = self._first_node
+            for j in range(self._size):
+                if j == i:
+                    return pointer_node.data
+                else:
+                    pointer_node = pointer_node.next
+            return None
+
 
 # n_queue = Queue()
-# n_queue.enqueue(1)
-# n_queue.enqueue(2)
-# n_queue.enqueue(3)
+# # n_queue.enqueue(1)
+# # n_queue.enqueue(2)
+# # n_queue.enqueue(3)
 #
 # for item in n_queue:
 #     print(item)

@@ -38,8 +38,9 @@ class LinkedListIterator:
         return self
 
     def __next__(self):
-        data = self._linked_list.__getitem__(0)
-        if data is not None:
+        if self._index + 1 <= self._linked_list.size():
+            data = self._linked_list.__getitem__(self._index)
+            self._index += 1
             return data
         else:
             raise StopIteration
@@ -166,7 +167,7 @@ class LinkedList:
     def __getitem__(self, i):
         if not isinstance(i, int):
             raise TypeError("Index i must be an integer")
-        elif i > self._size or i < -1 * (self._size + 1):
+        elif i > (self._size - 1) or i < -1 * (self._size + 1):
             raise IndexError(
                 f'The index of the element being inserted is outside the bounds of a doubly linked list. The size of the list is "{self._size}".'
             )
@@ -175,17 +176,12 @@ class LinkedList:
                 i = i + self._size + 1
             if i == 0:
                 node = self._head_node
-                if self._head_node is not None:
-                    self._head_node = self._head_node.next
-                self._size -= 1
                 if node is not None:
                     return node.data
                 else:
                     return None
             elif i == self._size:
                 node = self._tail_node
-                self._tail_node = self._tail_node.prev
-                self._size -= 1
                 return node.data
             else:
                 node = Node(self)
@@ -193,11 +189,6 @@ class LinkedList:
                 for j in range(self._size):
                     if j == i:
                         node = pointer_node
-                        node_prev = pointer_node.prev
-                        node_next = pointer_node.next
-                        node_prev.next = node_next
-                        node_next.prev = node_prev
-                        self._size -= 1
                         break
                     else:
                         pointer_node = pointer_node.next
@@ -219,6 +210,11 @@ class LinkedList:
 # new_lili.append(5)
 # new_lili.insert(111, 0)
 #
+# print("")
+# print(new_lili.__getitem__(0))
+# print(new_lili.__getitem__(2))
+# print(new_lili.__getitem__(5))
+# print("")
 #
 # for item in new_lili:
 #     print(item)

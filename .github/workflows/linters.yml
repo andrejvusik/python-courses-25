@@ -1,6 +1,6 @@
-# .github/workflows/black.yml
+# .github/workflows/linters.yml
 
-name: black
+name: linters
 
 on: [push, pull_request]
 
@@ -16,8 +16,16 @@ jobs:
                   python-version: 3.10
 
             - name: Install dependencies with pip
-              run: pip install black
+              run: pip install black isort flake8 mypy
 
             - name: Run black check
               run: black --check .
-              
+
+            - name: Run isort check
+              run: isort . --check
+
+            - name: Run flake8 check
+              run: flake8
+
+            - name: Run mypy
+              run: mypy . --check

@@ -1,10 +1,23 @@
-name: Lint
+# .github/workflows/black.yml
+
+name: black
 
 on: [push, pull_request]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: psf/black@stable
+    black:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup Python
+              uses: actions/setup-python@v1
+              with:
+                  python-version: 3.1
+
+            - name: Install dependencies with pip
+              run: pip install black
+
+            - name: Run black check
+              run: python3 -m black --check .
+              

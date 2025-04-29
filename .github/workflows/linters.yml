@@ -5,7 +5,7 @@ name: linters
 on: [push, pull_request]
 
 jobs:
-    black:
+    linters:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2

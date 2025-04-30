@@ -19,13 +19,13 @@ jobs:
               run: pip install black isort flake8 mypy
 
             - name: Run black check
-              run: black --check hw-007/.
+              run: black --check .
 
             - name: Run isort check
-              run: isort hw-007/. --check
+              run: isort . --check
 
             - name: Run flake8 check
-              run: flake8 --max-line-length 88 hw-007/.
+              run: flake8 --max-line-length 88 .
 
             - name: Run mypy
-              run: mypy hw-007/. --check
+              run: mypy . --check

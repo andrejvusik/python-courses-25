@@ -5,7 +5,7 @@ name: linters
 on: [push, pull_request]
 
 jobs:
-    black:
+    linters:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
               run: isort . --check
 
             - name: Run flake8 check
-              run: flake8
+              run: flake8 --max-line-length 88 .
 
             - name: Run mypy
               run: mypy . --check

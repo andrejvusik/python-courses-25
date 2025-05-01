@@ -4,7 +4,7 @@
 entered_string = list(
     input("Enter a string to find the longest substring without duplicates: ")
 )
-data_list = [[]]
+data_list: list = [[]]
 
 num_substr = 0
 
@@ -19,7 +19,7 @@ while len(entered_string) > 0:
 
 data_dict = {"".join(data_list[i]): len(data_list[i]) for i in range(len(data_list))}
 
-len_max_substr = max(data_dict, key=data_dict.get)
+len_max_substr = max(data_dict, key=data_dict.__getitem__)
 
 msg = f'Longest substrings consisting of "{data_dict[len_max_substr]}" characters: '
 for i in data_dict.keys():

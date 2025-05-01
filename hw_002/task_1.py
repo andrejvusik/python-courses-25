@@ -1,14 +1,16 @@
 # Task 1. Count words
-# The input line contains text (entered by the user). A word is a sequence of characters (except spaces) in a row.
+# The input line contains text (entered by the user).
+# A word is a sequence of characters (except spaces) in a row.
 # Words are separated by one or more spaces or end-of-line characters.
 # Count:
-# 1. How many times each word appears in the text and build a dictionary {word: quantity}.
+# 1. How many times each word appears in the text
+# and build a dictionary {word: quantity}.
 # 2. The number of unique words.
 # The words Apple and apple are considered the same.
 
 users_text = input("Enter your text: ").replace("\\n", " ").lower()
 list_text = users_text.split()
-dict_text = dict()
+dict_text: dict[str, int] = dict()
 
 for word in list_text:
     dict_text[word] = dict_text.get(word, 0) + 1

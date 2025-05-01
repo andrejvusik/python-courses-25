@@ -1,7 +1,8 @@
 # HOMEWORK #4. Task 1. Task 2. Task 3. Task 4. Task 5.
+import json
+import os
 from datetime import datetime
 from hashlib import sha256
-import json, os
 
 
 def get_hash(user_string):
@@ -21,6 +22,62 @@ class BankAccount:
         self.client_id = client_id
         self.currency = currency
         self.balance = balance
+
+
+def log_calls(func):
+    def wrapper(*args, **kwargs):
+        if os.path.exists("logs/logs.json"):
+            with open("logs/logs.json") as fh:
+                logs = json.loads(fh.read())
+        else:
+            os.system("mkdir logs")
+            logs = dict()
+        session = args[0]
+        user_id = session.client_id
+        launch_time = datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
+        func_name = func.__name__
+        if len(args) == 1:
+            logs[launch_time] = ["Client", user_id, func_name]
+        elif len(args) == 2:
+            logs[launch_time] = ["Client", user_id, func_name]
+        elif len(args) == 4:
+            if func_name == "reg_account":
+                logs[launch_time] = [
+                    "Account",
+                    user_id,
+                    func_name,
+                    args[1].acc_id,
+                    args[2],
+                    args[3],
+                    "-",
+                ]
+            else:
+                balance = round(args[2], 2)
+                logs[launch_time] = [
+                    "Account",
+                    user_id,
+                    func_name,
+                    args[1],
+                    balance,
+                    args[3],
+                    "-",
+                ]
+        elif len(args) == 6:
+            logs[launch_time] = [
+                "Account",
+                user_id,
+                func_name,
+                args[1],
+                args[3],
+                args[4],
+                args[2],
+            ]
+        with open("logs/logs.json", "w") as fh:
+            json.dump(logs, fh, indent="    ")
+        result = func(*args, **kwargs)
+        return result
+
+    return wrapper
 
 
 class Bank:
@@ -57,65 +114,66 @@ class Bank:
             os.system("mkdir db")
             self.bank_accounts = dict()
 
-    def log_calls(func):
-        def wrapper(*args, **kwargs):
-            if os.path.exists("logs/logs.json"):
-                with open("logs/logs.json") as fh:
-                    logs = json.loads(fh.read())
-            else:
-                os.system("mkdir logs")
-                logs = dict()
-            session = args[0]
-            user_id = session.client_id
-            launch_time = datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
-            func_name = func.__name__
-            if len(args) == 1:
-                logs[launch_time] = ["Client", user_id, func_name]
-            elif len(args) == 2:
-                logs[launch_time] = ["Client", user_id, func_name]
-            elif len(args) == 4:
-                if func_name == "reg_account":
-                    logs[launch_time] = [
-                        "Account",
-                        user_id,
-                        func_name,
-                        args[1].acc_id,
-                        args[2],
-                        args[3],
-                        "-",
-                    ]
-                else:
-                    balance = round(args[2], 2)
-                    logs[launch_time] = [
-                        "Account",
-                        user_id,
-                        func_name,
-                        args[1],
-                        balance,
-                        args[3],
-                        "-",
-                    ]
-            elif len(args) == 6:
-                logs[launch_time] = [
-                    "Account",
-                    user_id,
-                    func_name,
-                    args[1],
-                    args[3],
-                    args[4],
-                    args[2],
-                ]
-            with open("logs/logs.json", "w") as fh:
-                json.dump(logs, fh, indent="    ")
-            result = func(*args, **kwargs)
-            return result
-
-        return wrapper
+    # def log_calls(func):
+    #     def wrapper(*args, **kwargs):
+    #         if os.path.exists("logs/logs.json"):
+    #             with open("logs/logs.json") as fh:
+    #                 logs = json.loads(fh.read())
+    #         else:
+    #             os.system("mkdir logs")
+    #             logs = dict()
+    #         session = args[0]
+    #         user_id = session.client_id
+    #         launch_time = datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
+    #         func_name = func.__name__
+    #         if len(args) == 1:
+    #             logs[launch_time] = ["Client", user_id, func_name]
+    #         elif len(args) == 2:
+    #             logs[launch_time] = ["Client", user_id, func_name]
+    #         elif len(args) == 4:
+    #             if func_name == "reg_account":
+    #                 logs[launch_time] = [
+    #                     "Account",
+    #                     user_id,
+    #                     func_name,
+    #                     args[1].acc_id,
+    #                     args[2],
+    #                     args[3],
+    #                     "-",
+    #                 ]
+    #             else:
+    #                 balance = round(args[2], 2)
+    #                 logs[launch_time] = [
+    #                     "Account",
+    #                     user_id,
+    #                     func_name,
+    #                     args[1],
+    #                     balance,
+    #                     args[3],
+    #                     "-",
+    #                 ]
+    #         elif len(args) == 6:
+    #             logs[launch_time] = [
+    #                 "Account",
+    #                 user_id,
+    #                 func_name,
+    #                 args[1],
+    #                 args[3],
+    #                 args[4],
+    #                 args[2],
+    #             ]
+    #         with open("logs/logs.json", "w") as fh:
+    #             json.dump(logs, fh, indent="    ")
+    #         result = func(*args, **kwargs)
+    #         return result
+    #
+    #     return wrapper
 
     def generate_id(self, prefix):
         dic = {"Client": self.clients_of_bank, "BankAccount": self.bank_accounts}
         if len(dic[prefix]) > 0:
-            cli_id = int(str(list(dic[prefix].keys())[-1])[len(prefix) + 1 :]) + 1
+            a = len(prefix) + 1
+            cli_id = int(str(list(dic[prefix].keys())[-1])[a:]) + 1
             return f"{prefix}_{cli_id}"
         else:
             return f"{prefix}_1"
@@ -211,7 +269,8 @@ def welcome_bank():
         if bank_session.client_id is None:
             print("")
             print(
-                f"To continue, please LogIn or Register with {bank_session.BANK_NAME}.Online."
+                f"To continue, please LogIn or "
+                f"Register with {bank_session.BANK_NAME}.Online."
             )
             print("")
             print(
@@ -231,7 +290,8 @@ def welcome_bank():
             elif user_select.upper() == "Q":
                 print("")
                 print(
-                    f"Thank you for visiting {bank_session.BANK_NAME}. See you soon and have a nice day."
+                    f"Thank you for visiting {bank_session.BANK_NAME}. "
+                    f"See you soon and have a nice day."
                 )
                 bank_session.logout_client()
                 break
@@ -241,7 +301,8 @@ def welcome_bank():
         else:
             print("")
             print(
-                f"Dear {bank_session.client_name}, welcome to {bank_session.BANK_NAME}.Online!"
+                f"Dear {bank_session.client_name}, "
+                f"welcome to {bank_session.BANK_NAME}.Online!"
             )
             print("")
             print(
@@ -269,7 +330,8 @@ def welcome_bank():
             elif user_select.upper() == "Q":
                 print("")
                 print(
-                    f"Thank you for visiting {bank_session.BANK_NAME}. See you soon and have a nice day."
+                    f"Thank you for visiting {bank_session.BANK_NAME}. "
+                    f"See you soon and have a nice day."
                 )
                 bank_session.logout_client()
                 break
@@ -286,7 +348,8 @@ def history_client(bank_session):
 
     print("")
     print(
-        f"Dear {bank_session.client_name}, welcome to {bank_session.BANK_NAME}.Online!"
+        f"Dear {bank_session.client_name}, "
+        f"welcome to {bank_session.BANK_NAME}.Online!"
     )
     print("")
     print("Below is the history of visits to your personal account.")
@@ -317,7 +380,8 @@ def history_account(bank_session):
 
     print("")
     print(
-        f"Dear {bank_session.client_name}, welcome to {bank_session.BANK_NAME}.Online!"
+        f"Dear {bank_session.client_name}, "
+        f"welcome to {bank_session.BANK_NAME}.Online!"
     )
     print("")
     print("Below is a history of changes to your bank accounts.")
@@ -340,7 +404,8 @@ def history_account(bank_session):
             account_num_2 = str(logs[i][6])
 
             print(
-                f"  {date_time}{status_do}{account_num_1}{sum_op} {cur_op}{account_num_2}"
+                f"  {date_time}{status_do}{account_num_1}{sum_op} "
+                f"{cur_op}{account_num_2}"
             )
     while True:
         user_select = input('\nTo exit to the previous menu, enter "Q": ')
@@ -354,7 +419,8 @@ def history_account(bank_session):
 def reg_new_client(bank_session):
     print("")
     print(
-        f"Thank you for choosing {Bank.BANK_NAME}. To register, fill in the following fields, please."
+        f"Thank you for choosing {Bank.BANK_NAME}. "
+        f"To register, fill in the following fields, please."
     )
     print("")
     fullname = input("Enter your fullname: ")
@@ -423,11 +489,11 @@ def login_client(bank_session):
             number_of_attempts = 3
             while number_of_attempts > 0:
                 print("")
-                # password = input(f"Please enter your password ({number_of_attempts} attempts left): ")
                 if (
                     get_hash(
                         input(
-                            f"Please enter your password ({number_of_attempts} attempts left): "
+                            f"Please enter your password "
+                            f"({number_of_attempts} attempts left): "
                         )
                     )
                     == hash_password
@@ -454,7 +520,8 @@ def show_bank_accounts(bank_session):
     usd = eur = byn = 0.0
     for i, item in enumerate(client_accounts):
         print(
-            f"{i + 1}. {item} account balance {round(client_accounts[item][2], 2)} {client_accounts[item][1]}"
+            f"{i + 1}. {item} account balance "
+            f"{round(client_accounts[item][2], 2)} {client_accounts[item][1]}"
         )
         if client_accounts[item][1] == "USD":
             usd += client_accounts[item][2]
@@ -464,7 +531,8 @@ def show_bank_accounts(bank_session):
             byn += client_accounts[item][2]
     print("")
     print(
-        f"Balance on your accounts: {round(usd, 2)} USD, {round(eur, 2)} EUR, {round(byn, 2)} BYN"
+        f"Balance on your accounts: {round(usd, 2)} USD, "
+        f"{round(eur, 2)} EUR, {round(byn, 2)} BYN"
     )
     all_in_usd = round(
         usd
@@ -485,7 +553,7 @@ def show_bank_accounts(bank_session):
         2,
     )
     print(
-        "The total balance on all your accounts, converted at the current rate, is:",
+        "The total balance on all your accounts, " "converted at the current rate, is:",
         f"    {all_in_usd} USD",
         f"    {all_in_eur} EUR",
         f"    {all_in_byn} BYN",
@@ -500,7 +568,8 @@ def bank_online(bank_session):
     while True:
         print("")
         print(
-            f"Dear {bank_session.client_name}, welcome to {bank_session.BANK_NAME}.Online!"
+            f"Dear {bank_session.client_name}, "
+            f"welcome to {bank_session.BANK_NAME}.Online!"
         )
         print("In this menu you can manage your accounts.")
         client_accounts, currency_list = show_bank_accounts(bank_session)
@@ -538,7 +607,8 @@ def bank_online(bank_session):
                     bank_session
                 )
                 print(
-                    f"You have successfully topped up {top_up_acc_number} with the amount of {top_up_amount} {currency_acc}."
+                    f"You have successfully topped up {top_up_acc_number} "
+                    f"with the amount of {top_up_amount} {currency_acc}."
                 )
                 continue
             if user_select.upper() == "W":
@@ -547,7 +617,8 @@ def bank_online(bank_session):
                     withdrawal_of_funds(bank_session)
                 )
                 print(
-                    f"You have successfully withdrawn amount {withdrawal_funds} {currency_acc} from account {withdrawal_acc_number}."
+                    f"You have successfully withdrawn amount {withdrawal_funds} "
+                    f"{currency_acc} from account {withdrawal_acc_number}."
                 )
                 continue
         if len(client_accounts) > 1:
@@ -557,14 +628,17 @@ def bank_online(bank_session):
                     transfer_amount(bank_session)
                 )
                 print(
-                    f"You have successfully transferred from account {acc_number_1} to account {acc_number_2} the amount of {transfer_funds} {currency_acc}."
+                    f"You have successfully transferred from account {acc_number_1} "
+                    f"to account {acc_number_2} the amount of "
+                    f"{transfer_funds} {currency_acc}."
                 )
                 continue
         if user_select.upper() == "P":
             acc_statement_filename, acc_stat_text = acc_stat(bank_session)
             os.system("cls" if os.name == "nt" else "clear")
             print(
-                f"Your account statement has been saved to file {acc_statement_filename}."
+                f"Your account statement has been saved "
+                f"to file {acc_statement_filename}."
             )
             continue
 
@@ -586,7 +660,11 @@ def acc_stat(bank_session):
     accounts = ""
     usd = eur = byn = 0.0
     for i, item in enumerate(client_accounts):
-        accounts += f"    {i + 1}. {item}: account balance {round(client_accounts[item][2], 2)} {client_accounts[item][1]}\n"
+        accounts += (
+            f"    {i + 1}. {item}: account balance "
+            f"{round(client_accounts[item][2], 2)} "
+            f"{client_accounts[item][1]}\n"
+        )
         if client_accounts[item][1] == "USD":
             usd += client_accounts[item][2]
         elif client_accounts[item][1] == "EUR":
@@ -611,13 +689,17 @@ def acc_stat(bank_session):
         + byn,
         2,
     )
-    acc_statement_filename = f"{Bank.BANK_NAME}_{bank_session.client_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.txt"
+    acc_statement_filename = (
+        f"{Bank.BANK_NAME}_{bank_session.client_id}_"
+        f"{datetime.now().strftime('%Y%m%d%H%M%S')}.txt"
+    )
     acc_stat_text = (
         f"{Bank.BANK_NAME}\n"
         f"\n"
         f"Statement of your bank accounts.\n"
         f"\n"
-        f"As of {datetime.now().strftime('%d.%m.%Y at %H:%M:%S')} {bank_session.client_name} has {len(client_accounts)} open accounts.\n"
+        f"As of {datetime.now().strftime('%d.%m.%Y at %H:%M:%S')} "
+        f"{bank_session.client_name} has {len(client_accounts)} open accounts.\n"
         f"\n"
         f"More details:\n"
         f"\n"
@@ -631,7 +713,8 @@ def acc_stat(bank_session):
         f"\n"
         f"Informational.\n"
         f"\n"
-        f"The total balance on all your accounts, converted at the current rate, is: \n"
+        f"The total balance on all your accounts, "
+        f"converted at the current rate, is: \n"
         f"    - {all_in_usd} USD,\n"
         f"    - {all_in_eur} EUR,\n"
         f"    - {all_in_byn} BYN.\n"
@@ -654,12 +737,14 @@ def check_float(user_string):
 def create_account(bank_session):
     print("")
     print(
-        f"Dear {bank_session.client_name}, welcome to {bank_session.BANK_NAME}.Online!"
+        f"Dear {bank_session.client_name}, "
+        f"welcome to {bank_session.BANK_NAME}.Online!"
     )
     _, currency_list = show_bank_accounts(bank_session)
     print("")
     print(
-        'To open a new bank account, please follow the instructions below. Enter "Q" to exit to main menu.'
+        "To open a new bank account, please follow the instructions below. "
+        'Enter "Q" to exit to main menu.'
     )
     print("")
     break_out_flag = False
@@ -693,7 +778,7 @@ def create_account(bank_session):
         else:
             print("Please check the correctness of your choice.")
             continue
-    if break_out_flag != True:
+    if break_out_flag is not True:
         client_acc = BankAccount(
             client_id=bank_session.client_id, currency=currency, balance=balance
         )
@@ -706,12 +791,15 @@ def close_account(bank_session):
     while True:
         print("")
         print(
-            f"Dear {bank_session.client_name}, welcome to {bank_session.BANK_NAME}.Online!"
+            f"Dear {bank_session.client_name}, "
+            f"welcome to {bank_session.BANK_NAME}.Online!"
         )
         client_accounts, currency_list = show_bank_accounts(bank_session)
         print("")
         print(
-            'To withdraw all funds from the account and close (delete) the account, enter the account number (BankAccount_*) or enter "Q" to cancel and go to the previous menu.'
+            "To withdraw all funds from the account and close (delete) "
+            "the account, enter the account number (BankAccount_*) "
+            'or enter "Q" to cancel and go to the previous menu.'
         )
         print("")
         acc_list = [i for i in client_accounts.keys()]
@@ -739,12 +827,14 @@ def top_up_account(bank_session):
     while True:
         print("")
         print(
-            f"Dear {bank_session.client_name}, welcome to {bank_session.BANK_NAME}.Online!"
+            f"Dear {bank_session.client_name}, "
+            f"welcome to {bank_session.BANK_NAME}.Online!"
         )
         client_accounts, currency_list = show_bank_accounts(bank_session)
         print("")
         print(
-            'To top up, enter your account number (BankAccount_*) or enter "Q" to cancel and go to the previous menu.'
+            "To top up, enter your account number (BankAccount_*) "
+            'or enter "Q" to cancel and go to the previous menu.'
         )
         print("")
         acc_list = [i for i in client_accounts.keys()]
@@ -781,12 +871,14 @@ def withdrawal_of_funds(bank_session):
     while True:
         print("")
         print(
-            f"Dear {bank_session.client_name}, welcome to {bank_session.BANK_NAME}.Online!"
+            f"Dear {bank_session.client_name}, "
+            f"welcome to {bank_session.BANK_NAME}.Online!"
         )
         client_accounts, currency_list = show_bank_accounts(bank_session)
         print("")
         print(
-            'Enter the account (BankAccount_*) from which you would like to withdraw funds or enter "Q" to cancel and go to the previous menu.'
+            "Enter the account (BankAccount_*) from which you would like to withdraw "
+            'funds or enter "Q" to cancel and go to the previous menu.'
         )
         print("")
         acc_list = [i for i in client_accounts.keys()]
@@ -806,7 +898,8 @@ def withdrawal_of_funds(bank_session):
                     if check_float(withdrawal_amount) and float(withdrawal_amount) >= 0:
                         if float(withdrawal_amount) > client_accounts[user_select][2]:
                             print(
-                                f"There are not enough funds in your account {user_select} for withdrawal."
+                                f"There are not enough funds in your account "
+                                f"{user_select} for withdrawal."
                             )
                             continue
                         else:
@@ -828,15 +921,16 @@ def withdrawal_of_funds(bank_session):
 
 
 def transfer_amount(bank_session):
-    break_out_flag = False
     while True:
         print("")
         print(
-            f"Dear {bank_session.client_name}, welcome to {bank_session.BANK_NAME}.Online!"
+            f"Dear {bank_session.client_name}, "
+            f"welcome to {bank_session.BANK_NAME}.Online!"
         )
         client_accounts, currency_list = show_bank_accounts(bank_session)
         print(
-            'Enter the account (BankAccount_*) from which you want to transfer funds or enter "Q" to cancel and go to the previous menu.'
+            "Enter the account (BankAccount_*) from which you want to transfer "
+            'funds or enter "Q" to cancel and go to the previous menu.'
         )
         print("")
         acc_list = [i for i in client_accounts.keys()]
@@ -854,7 +948,8 @@ def transfer_amount(bank_session):
                 while True:
                     print("")
                     acc_number_2 = input(
-                        "Enter the account (BankAccount_*) to which you want to transfer funds: "
+                        "Enter the account (BankAccount_*) "
+                        "to which you want to transfer funds: "
                     )
                     print("")
                     if acc_number_2 in acc_list:
@@ -871,7 +966,8 @@ def transfer_amount(bank_session):
                     if check_float(transfer_funds) and float(transfer_funds) >= 0:
                         if float(transfer_funds) > client_accounts[acc_number_1][2]:
                             print(
-                                f"There are not enough funds in your account {acc_number_2} for transfer."
+                                f"There are not enough funds in your account "
+                                f"{acc_number_2} for transfer."
                             )
                             continue
                         else:

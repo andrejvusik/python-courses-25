@@ -1,6 +1,9 @@
-# Task 3. Write a decorator log_calls that writes the call time, name, and
-# arguments of the called function to a file. One function call is one line in the file.
-# The decorator must accept the name of the file to write to as a parameter.
+# Task 3. Write a decorator log_calls that
+# writes the call time, name, and
+# arguments of the called function to a file.
+# One function call is one line in the file.
+# The decorator must accept the name of the
+# file to write to as a parameter.
 from datetime import datetime
 
 
@@ -13,7 +16,8 @@ def log_calls(func, log_file="log_file.txt"):
 
         fh = open(log_file, "a")
         fh.write(
-            f"{launch_time}. Launched function: {func_name}. Arguments: {func_args}, {func_kwargs}.\n"
+            f"{launch_time}. Launched function: {func_name}. "
+            f"Arguments: {func_args}, {func_kwargs}.\n"
         )
         fh.close()
 

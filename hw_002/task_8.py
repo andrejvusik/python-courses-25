@@ -10,7 +10,8 @@ print("Hello. Let's play guess the number.")
 random_number = randint(1, 100)
 
 print(
-    'I have thought of a number from 1 to 100. Try to guess it. I will prompt you "more" or "less".'
+    "I have thought of a number from 1 to 100. "
+    'Try to guess it. I will prompt you "more" or "less".'
 )
 
 user_number = int(input("Guess a number from 1 to 100: "))
@@ -25,7 +26,8 @@ while user_number != random_number:
         count_tries += 1
         user_number = int(
             input(
-                f"My number is higher. Try again. Enter a number from {lo_num} to {hi_num}: "
+                f"My number is higher. Try again. "
+                f"Enter a number from {lo_num} to {hi_num}: "
             )
         )
     elif random_number < user_number:
@@ -33,10 +35,12 @@ while user_number != random_number:
         count_tries += 1
         user_number = int(
             input(
-                f"My number is lower. Try again. Enter a number from {lo_num} to {hi_num}: "
+                f"My number is lower. Try again. "
+                f"Enter a number from {lo_num} to {hi_num}: "
             )
         )
 
 print(
-    f'Congratulations! You won! You guessed my number "{random_number}" in "{count_tries}" tries.'
+    f"Congratulations! You won! You guessed my number "
+    f'"{random_number}" in "{count_tries}" tries.'
 )

@@ -15,7 +15,7 @@ BACKOFF_FACTOR = 0.5
 
 
 def retry(func):
-    @functools.wraps(retry)
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         retries_left = RETRIES
         while retries_left:

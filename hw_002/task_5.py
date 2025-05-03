@@ -1,7 +1,8 @@
 # Task 5. Anagrams
 # The user enters 2 words.
 # Write a program that checks whether they are anagrams
-# (the first word can be formed by rearranging the letters in the second word).
+# (the first word can be formed by rearranging
+# the letters in the second word).
 # Example:
 # - “listen”
 # - “silent”
@@ -19,9 +20,11 @@ second_word_list.sort()
 
 if first_word_list == second_word_list:
     print(
-        f'True! The words you entered "{first_word}" and "{second_word}" are anagrams!'
+        f'True! The words you entered "{first_word}" '
+        f'and "{second_word}" are anagrams!'
     )
 else:
     print(
-        f'False! The words you entered "{first_word}" and "{second_word}" are NOT anagrams!'
+        f'False! The words you entered "{first_word}" '
+        f'and "{second_word}" are NOT anagrams!'
     )

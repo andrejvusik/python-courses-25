@@ -85,7 +85,9 @@ class LinkedList:
             raise TypeError("Index i must be an integer")
         elif i > self._size or i < -1 * (self._size + 1):
             raise IndexError(
-                f'The index of the element being inserted is outside the bounds of a doubly linked list. The size of the list is "{self._size}".'
+                f"The index of the element being inserted is outside "
+                f"the bounds of a doubly linked list. "
+                f'The size of the list is "{self._size}".'
             )
         else:
             if self._head_node is None:
@@ -169,7 +171,9 @@ class LinkedList:
             raise TypeError("Index i must be an integer")
         elif i > (self._size - 1) or i < -1 * (self._size + 1):
             raise IndexError(
-                f'The index of the element being inserted is outside the bounds of a doubly linked list. The size of the list is "{self._size}".'
+                f"The index of the element being inserted is outside "
+                f"the bounds of a doubly linked list. "
+                f'The size of the list is "{self._size}".'
             )
         else:
             if i < 0:

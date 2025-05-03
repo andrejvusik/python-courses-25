@@ -1,12 +1,15 @@
 # Task 4. The user enters a matrix (list of lists).
-# Write a function that transposes the matrix without changing the input matrix.
-# Matrix transposition is an operation on a matrix when its rows become columns with the same numbers.
-from itertools import count
+# Write a function that transposes the matrix
+# without changing the input matrix.
+# Matrix transposition is an operation on a matrix
+# when its rows become columns with the same numbers.
 
 
 def input_matrix(matrix=None):
     if matrix is None:
-        user_matrix = input("Enter the matrix of numbers (in list of lists format): ")
+        user_matrix = input(
+            "Enter the matrix of numbers " "(in list of lists format): "
+        )
         user_matrix = (
             user_matrix.strip("[]()")
             .replace(" ", "")

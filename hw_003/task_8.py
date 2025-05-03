@@ -7,9 +7,10 @@ def merge_sort(unsorted_list):
     if len(unsorted_list) == 1:
         return unsorted_list
 
+    a = len(unsorted_list) // 2
     first_list, second_list = (
-        merge_sort(unsorted_list[: len(unsorted_list) // 2]),
-        merge_sort(unsorted_list[len(unsorted_list) // 2 :]),
+        merge_sort(unsorted_list[:a]),
+        merge_sort(unsorted_list[a:]),
     )
 
     result_list = []

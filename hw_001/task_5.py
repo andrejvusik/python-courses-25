@@ -1,5 +1,6 @@
 # Task 5. Exchanging money
-# Enter the amount in rubles (an integer). Determine how many 100, 50, 10, 5, and 1 ruble bills
+# Enter the amount in rubles (an integer).
+# Determine how many 100, 50, 10, 5, and 1 ruble bills
 # will be needed to exchange it.
 
 amount_of_money = int(input("Enter the amount in rubles (whole number): "))

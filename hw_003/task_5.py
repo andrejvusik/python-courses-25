@@ -5,7 +5,7 @@
 # calling the decorated function.
 
 # Dictionary of function result hashes
-func_cashes_dict = {}
+func_cashes_dict: dict[list, int] = dict()
 
 
 def cashes_dec(func):

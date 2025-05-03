@@ -1,5 +1,6 @@
 # Task 1. Formatting the full name
-# Enter the last name, first name, and patronymic. Bring them to the format Last name I.O.
+# Enter the last name, first name, and patronymic.
+# Bring them to the format Last name I.O.
 # (first letter of the first name and patronymic with a period).
 
 last_name, first_name, patronymic = (

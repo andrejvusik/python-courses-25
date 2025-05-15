@@ -5,7 +5,7 @@ name: linters
 on: [pull_request]
 
 jobs:
-    black:
+    linters:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -13,7 +13,7 @@ jobs:
             - name: Setup Python
               uses: actions/setup-python@v1
               with:
-                  python-version: 3.13.1
+                  python-version: 3.13.3
 
             - name: Install dependencies with pip
               run: pip install -r ../../requirements.txt

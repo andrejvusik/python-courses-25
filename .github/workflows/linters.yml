@@ -16,7 +16,7 @@ jobs:
                   python-version: 3.13.3
 
             - name: Install dependencies with pip
-              run: pip install -r ../../requirements.txt
+              run: pip install -r requirements.txt
 
             - name: Run black check
               run: black --check .

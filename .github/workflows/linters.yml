@@ -1,0 +1,31 @@
+# .github/workflows/linters.yml
+
+name: linters
+
+on: [pull_request]
+
+jobs:
+    black:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup Python
+              uses: actions/setup-python@v1
+              with:
+                  python-version: 3.13.1
+
+            - name: Install dependencies with pip
+              run: pip install -r ../../requirements.txt
+
+            - name: Run black check
+              run: black --check .
+
+            - name: Run isort check
+              run: isort --check .
+
+            - name: Run flake8 check
+              run: flake8 --max-line-length 88 .
+
+            - name: Run mypy
+              run: mypy .

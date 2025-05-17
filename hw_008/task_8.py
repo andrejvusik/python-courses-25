@@ -9,7 +9,7 @@ testing_dict = {
     "user_surname": "Vusik",
     "user_email": "andrejvusik@gmail.com",
     "status": "married",
-    "children": {"first_child_name": "Ivam", "second_child_name": "Mikhail"},
+    "children": {"first_child_name": "Ivan", "second_child_name": "Mikhail"},
     "city_of_residence": "minsk",
 }
 

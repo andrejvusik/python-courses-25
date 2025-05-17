@@ -5,18 +5,16 @@
 # @type_check(int, int)
 # def add(a, b):
 #     …
+import functools
 
 
 def type_check(*types):
     def type_check_decorator(func):
+        @functools.wraps(func)
         def wrapper(*args):
-            print(args, type(args))
-            print(types, type(types))
-            for i, arg in enumerate(args):
-                if not isinstance(arg, types[i]):
-                    raise TypeError(
-                        f'#{i} argument "{arg}" is not a "{types[i].__name__}".'
-                    )
+            for arg, t in zip(args, types):
+                if not isinstance(arg, t):
+                    raise TypeError(f'#Argument "{arg}" is not a "{t.__name__}".')
             result = func(*args)
             return result
 
@@ -30,4 +28,4 @@ def test_func(a, b):
     print(a, b)
 
 
-test_func(1, "t")
+test_func(1, "a")

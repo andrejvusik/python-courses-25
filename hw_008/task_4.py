@@ -1,12 +1,13 @@
 # Задача 4 - ограничение частоты вызовов.
 # Напишите декоратор @rate_limit, который разрешает
 # только X вызовов в Y секунд (например, 5 раз в 60 сек).
-
+import functools
 import time
 
 
 def rate_limit(x, y):
     def decorator(func):
+        @functools.wraps(func)
         def wrapper(*args, **kwargs):
             if wrapper.start_time is None:
                 wrapper.start_time = time.time()

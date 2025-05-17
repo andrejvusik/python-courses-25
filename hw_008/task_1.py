@@ -1,9 +1,11 @@
 # Напишите декоратор @timing, который выводит на экран время выполнения
 # функции в миллисекундах.
+import functools
 import time
 
 
 def timing(func):
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         start = time.time()
         result = func(*args, **kwargs)

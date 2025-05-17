@@ -7,10 +7,12 @@
 # @retry(TypeError, n=5)
 # def func():
 #     …
+import functools
 
 
-def retry(error, n=None):
+def retry(error, n=1):
     def retry_decorator(func):
+        @functools.wraps(func)
         def wrapper(*args, **kwargs):
             retries_left = n
             while retries_left:

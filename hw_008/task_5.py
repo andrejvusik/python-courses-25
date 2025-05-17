@@ -7,13 +7,14 @@
 # @warn_if_slow
 # def very_slow_function():
 #     time.sleep(10)
-
+import functools
 import threading
 import time
 
 
 def warn_if_slow(threshold=1.0):
     def decorator(func):
+        @functools.wraps(func)
         def wrapper(*args, **kwargs):
 
             def timer_print(func_name, interval):
